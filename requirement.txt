@@ -5,7 +5,6 @@ cffi==1.15.1
 chardet==4.0.0
 Cheetah==2.4.4
 CherryPy==3.2.2
-cloud-init==17.1
 concurrent-log-handler==0.9.22
 configobj==4.7.2
 configparser==4.0.2
@@ -34,7 +33,6 @@ jsonpointer==1.9
 jsonschema==2.5.1
 jwcrypto==0.2.1
 kitchen==1.1.1
-langtable==0.0.31
 Markdown==2.4.1
 MarkupSafe==0.11
 meld3==0.6.10
@@ -44,11 +42,9 @@ numpy==1.16.6
 oauthlib==2.0.1
 pandas==0.24.2
 pathlib2==2.3.7.post1
-perf==0.1
 Pillow==2.0.0
 pipdeptree==2.0.0
 ply==3.4
-policycoreutils-default-encoding==0.1
 portalocker==1.7.1
 prettytable==0.7.2
 protobuf==2.5.0
