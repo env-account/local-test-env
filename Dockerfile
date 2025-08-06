@@ -95,11 +95,6 @@ RUN pip install zhon==1.1.5
 # RUN pip install schedutils==0.4
 # 2.269 ERROR: Could not find a version that satisfies the requirement schedutils==0.4 (from versions: none)
 # 2.269 ERROR: No matching distribution found for schedutils==0.4
-# RUN pip install yum-langpacks==0.4.2 无用
-# 3.273 ERROR: Could not find a version that satisfies the requirement yum-langpacks==0.4.2 (from versions: none)
-# 3.274 ERROR: No matching distribution found for yum-langpacks==0.4.2
-# RUN pip install slip==0.3.8 无用
-# RUN pip install slip.dbus==0.4.0 无用
 # RUN pip install python-dmidecode==3.10.13
 # 2.224 ERROR: Could not find a version that satisfies the requirement python-dmidecode==3.10.13 (from versions: none)
 # 2.224 ERROR: No matching distribution found for python-dmidecode==3.10.13
@@ -133,9 +128,6 @@ RUN pip install zhon==1.1.5
 # 9.126   Building wheel for pycairo (setup.py): finished with status 'error'
 # 9.126   ERROR: Command errored out with exit status 1:
 # 9.126    command: /usr/bin/python -u -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-DdtHZf/pycairo/setup.py'"'"'; __file__='"'"'/tmp/pip-install-DdtHZf/pycairo/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' bdist_wheel -d /tmp/pip-wheel-tnFgwA
-# RUN pip install perf==0.1  无用
-# 3.016 ERROR: Could not find a version that satisfies the requirement perf (from versions: none)
-# 3.016 ERROR: No matching distribution found for perf
 # RUN pip install cloud-init==17.1
 # 2.231 ERROR: Could not find a version that satisfies the requirement cloud-init==17.1 (from versions: none)
 # 2.231 ERROR: No matching distribution found for cloud-init==17.1

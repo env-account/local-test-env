@@ -34,7 +34,6 @@ meld3==0.6.10
 msgpack==0.6.2
 MySQL-python==1.2.5
 oauthlib==2.0.1
-perf==0.1
 Pillow==2.0.0
 pipdeptree==2.0.0
 ply==3.4
@@ -63,8 +62,6 @@ requests==2.26.0
 requests-http-signature==0.2.0
 schedutils==0.4
 six==1.9.0
-slip==0.4.0
-slip.dbus==0.4.0
 supervisor==3.4.0
 typing==3.10.0.0
 urlgrabber==3.10
@@ -72,6 +69,5 @@ urllib3==1.26.7
 virtualenv==16.7.9
 web.py==0.37
 websocket-client==0.56.0
-yum-langpacks==0.4.2
 yum-metadata-parser==1.1.4
 zhon==1.1.5
