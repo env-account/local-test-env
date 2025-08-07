@@ -5,7 +5,6 @@ cffi==1.15.1
 chardet==4.0.0
 Cheetah==2.4.4
 CherryPy==3.2.2
-cloud-init==17.1
 configobj==4.7.2
 cos-python-sdk-v5==1.7.5
 crcmod==1.7

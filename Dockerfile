@@ -113,6 +113,3 @@ RUN cd /home/software && cd python-libevent-0.9.2 && \
 # RUN pip install python-linux-procfs==0.4.9
 # 2.160 ERROR: Could not find a version that satisfies the requirement python-linux-procfs==0.4.9 (from versions: none)
 # 2.161 ERROR: No matching distribution found for python-linux-procfs==0.4.9
-# RUN pip install cloud-init==17.1
-# 2.231 ERROR: Could not find a version that satisfies the requirement cloud-init==17.1 (from versions: none)
-# 2.231 ERROR: No matching distribution found for cloud-init==17.1
