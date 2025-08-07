@@ -92,9 +92,6 @@ RUN pip install web.py==0.37
 RUN pip install websocket-client==0.56.0
 RUN pip install yum-metadata-parser==1.1.4
 RUN pip install zhon==1.1.5
-# RUN pip install schedutils==0.4
-# 2.269 ERROR: Could not find a version that satisfies the requirement schedutils==0.4 (from versions: none)
-# 2.269 ERROR: No matching distribution found for schedutils==0.4
 RUN mkdir -p /home/software
 ADD ./libevent-2.0.22-stable.tar /home/software
 RUN yum install -y make
