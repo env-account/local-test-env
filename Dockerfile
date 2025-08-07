@@ -98,20 +98,18 @@ RUN pip install zhon==1.1.5
 # RUN pip install python-dmidecode==3.10.13
 # 2.224 ERROR: Could not find a version that satisfies the requirement python-dmidecode==3.10.13 (from versions: none)
 # 2.224 ERROR: No matching distribution found for python-dmidecode==3.10.13
-# RUN pip install python-libevent==0.9.2
-# 3.938 Collecting python-libevent==0.9.2
-# 5.898   Downloading python-libevent-0.9.2.tar.gz (33 kB)
-# 6.517     ERROR: Command errored out with exit status 1:
-# 6.517      command: /usr/bin/python -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-KPe0mm/python-libevent/setup.py'"'"'; __file__='"'"'/tmp/pip-install-KPe0mm/python-libevent/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' egg_info --egg-base /tmp/pip-pip-egg-info-BcLYzP
-# 6.517          cwd: /tmp/pip-install-KPe0mm/python-libevent/
-# 6.517     Complete output (5 lines):
-# 6.517     Traceback (most recent call last):
-# 6.517       File "<string>", line 1, in <module>
-# 6.517       File "/tmp/pip-install-KPe0mm/python-libevent/setup.py", line 35, in <module>
-# 6.517         raise TypeError('Please set the environment variable LIBEVENT_ROOT ' \
-# 6.517     TypeError: Please set the environment variable LIBEVENT_ROOT to the path of your libevent root directory and make sure to pass "--with-pic" to configure when building it
-# 6.517     ----------------------------------------
-# 6.518 ERROR: Command errored out with exit status 1: python setup.py egg_info Check the logs for full command output.
+RUN mkdir -p /home/software
+ADD ./libevent-2.0.22-stable.tar /home/software
+RUN yum install -y make
+RUN cd /home/software && cd libevent-2.0.22-stable && CFLAGS=-fPIC ./configure --prefix=/home/software/libevent && make && make install
+ADD ./python-libevent-0.9.2.tar /home/software
+RUN cd /home/software && cd python-libevent-0.9.2 && \
+        sed -i "s/LIBEVENT_ROOT = os.environ.get('LIBEVENT_ROOT')/LIBEVENT_ROOT = '\/home\/software\/libevent'/g" setup.py && \
+        sed -i "s/os.path.join(LIBEVENT_ROOT, '.libs', 'libevent.a')/os.path.join(LIBEVENT_ROOT, 'lib', 'libevent.a')/g" setup.py && \
+        sed -i "s/os.path.join(LIBEVENT_ROOT, '.libs', 'libevent_pthreads.a')/os.path.join(LIBEVENT_ROOT, 'lib', 'libevent_pthreads.a')/g" setup.py && \
+        cat setup.py && \
+        python setup.py build && \
+        python setup.py install
 # RUN pip install python-linux-procfs==0.4.9
 # 2.160 ERROR: Could not find a version that satisfies the requirement python-linux-procfs==0.4.9 (from versions: none)
 # 2.161 ERROR: No matching distribution found for python-linux-procfs==0.4.9
