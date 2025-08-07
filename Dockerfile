@@ -95,9 +95,6 @@ RUN pip install zhon==1.1.5
 # RUN pip install schedutils==0.4
 # 2.269 ERROR: Could not find a version that satisfies the requirement schedutils==0.4 (from versions: none)
 # 2.269 ERROR: No matching distribution found for schedutils==0.4
-# RUN pip install python-dmidecode==3.10.13
-# 2.224 ERROR: Could not find a version that satisfies the requirement python-dmidecode==3.10.13 (from versions: none)
-# 2.224 ERROR: No matching distribution found for python-dmidecode==3.10.13
 RUN mkdir -p /home/software
 ADD ./libevent-2.0.22-stable.tar /home/software
 RUN yum install -y make
