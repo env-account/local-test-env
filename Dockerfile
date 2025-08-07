@@ -113,19 +113,6 @@ RUN cd /home/software && cd python-libevent-0.9.2 && \
 # RUN pip install python-linux-procfs==0.4.9
 # 2.160 ERROR: Could not find a version that satisfies the requirement python-linux-procfs==0.4.9 (from versions: none)
 # 2.161 ERROR: No matching distribution found for python-linux-procfs==0.4.9
-# RUN pip install pygobject==3.27.0
-# 8.586   Package glib-2.0 was not found in the pkg-config search path.
-# 8.586   Perhaps you should add the directory containing `glib-2.0.pc'
-# 8.586   to the PKG_CONFIG_PATH environment variable
-# 8.586   No package 'glib-2.0' found
-# 8.586   Command '['pkg-config', '--print-errors', '--exists', u'glib-2.0 >= 2.38.0']' returned non-zero exit status 1
-# 8.586   ----------------------------------------
-# 8.586   ERROR: Failed building wheel for pygobject
-# 8.586   Running setup.py clean for pygobject
-# 8.845   Building wheel for pycairo (setup.py): started
-# 9.126   Building wheel for pycairo (setup.py): finished with status 'error'
-# 9.126   ERROR: Command errored out with exit status 1:
-# 9.126    command: /usr/bin/python -u -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-DdtHZf/pycairo/setup.py'"'"'; __file__='"'"'/tmp/pip-install-DdtHZf/pycairo/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' bdist_wheel -d /tmp/pip-wheel-tnFgwA
 # RUN pip install cloud-init==17.1
 # 2.231 ERROR: Could not find a version that satisfies the requirement cloud-init==17.1 (from versions: none)
 # 2.231 ERROR: No matching distribution found for cloud-init==17.1
