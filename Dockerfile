@@ -37,3 +37,5 @@ RUN cd /home/software && cd python-libevent-0.9.2 && \
         cat setup.py && \
         python setup.py build && \
         python setup.py install
+RUN mkdir -p /var/gouji
+CMD ["tail", "-f", "/dev/null"]
