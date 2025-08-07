@@ -26,7 +26,7 @@ jsonpointer==1.9
 jsonschema==2.5.1
 jwcrypto==0.2.1
 kitchen==1.1.1
-langtable==0.0.31
+langtable==0.0.44
 Markdown==2.4.1
 MarkupSafe==0.11
 meld3==0.6.10
