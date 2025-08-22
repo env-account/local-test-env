@@ -1,41 +1,73 @@
 FROM ccr.ccs.tencentyun.com/qcloud/centos:latest
 RUN rm /etc/yum.repos.d/CentOS-Epel.repo
-RUN --mount=type=bind,source=Centos-7.repo,target=Centos-7.repo \
-    cp Centos-7.repo /etc/yum.repos.d/CentOS-Base.repo
-RUN yum install -y epel-release && \
-        yum install -y protobuf-devel && \
-        yum install -y lua-devel && \
-        yum install -y libevent-devel && \
-        yum install -y hiredis-devel && \
-        yum install -y log4cplus-devel && \
-        yum install -y boost-devel && \
-        yum install -y jsoncpp-devel && \
-        yum install -y libuuid-devel && \
-        yum install -y openssl-devel && \
-        yum install -y libcurl-devel && \
-        yum install -y mariadb-devel && \
-        yum install -y gcc && \
-        yum install -y python-devel && \
-        yum install -y make
-RUN mkdir -p /home/python
-ADD ./requirement.txt /home/python
-RUN cd /home/python && \
-        curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py && \
+WORKDIR /app
+COPY Centos-7.repo cert.pem libevent-2.0.22-stable.tar openssl-3.1.1.tar Python-3.10.12.tar python-libevent-0.9.2.tar requirement.txt uwsgi-2.0.20.tar /app/
+RUN cp Centos-7.repo /etc/yum.repos.d/CentOS-Base.repo
+RUN yum install -y epel-release
+RUN yum install -y protobuf-devel lua-devel libevent-devel \
+        hiredis-devel log4cplus-devel boost-devel jsoncpp-devel \
+        libuuid-devel openssl-devel libcurl-devel mariadb-devel \
+        gcc python-devel make perl-IPC-Cmd \
+        bzip2-devel ncurses-devel lz4-devel sqlite-devel \
+        tk-devel readline-devel libffi-devel \
+        cmake gcc-c++
+RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py && \
         python get-pip.py && \
         pip install --upgrade pip && \
         pip install --upgrade setuptools==44.1.1 && \
         pip install --upgrade wheel && \
         pip install -r requirement.txt
-RUN mkdir -p /home/software
-ADD ./libevent-2.0.22-stable.tar /home/software
-RUN cd /home/software && cd libevent-2.0.22-stable && CFLAGS=-fPIC ./configure --prefix=/home/software/libevent && make && make install
-ADD ./python-libevent-0.9.2.tar /home/software
-RUN cd /home/software && cd python-libevent-0.9.2 && \
-        sed -i "s/LIBEVENT_ROOT = os.environ.get('LIBEVENT_ROOT')/LIBEVENT_ROOT = '\/home\/software\/libevent'/g" setup.py && \
+RUN tar -xvf libevent-2.0.22-stable.tar && \
+        cd libevent-2.0.22-stable && \
+        CFLAGS=-fPIC ./configure --prefix=/app/libevent && \
+        make && \
+        make install
+RUN tar -xvf python-libevent-0.9.2.tar && cd python-libevent-0.9.2 && \
+        sed -i "s/LIBEVENT_ROOT = os.environ.get('LIBEVENT_ROOT')/LIBEVENT_ROOT = '\/app\/libevent'/g" setup.py && \
         sed -i "s/os.path.join(LIBEVENT_ROOT, '.libs', 'libevent.a')/os.path.join(LIBEVENT_ROOT, 'lib', 'libevent.a')/g" setup.py && \
         sed -i "s/os.path.join(LIBEVENT_ROOT, '.libs', 'libevent_pthreads.a')/os.path.join(LIBEVENT_ROOT, 'lib', 'libevent_pthreads.a')/g" setup.py && \
-        cat setup.py && \
         python setup.py build && \
         python setup.py install
-RUN mkdir -p /var/gouji
+RUN tar -xvf openssl-3.1.1.tar && \
+        cd /app/openssl-3.1.1 && \
+        CFLAGS=-fPIC ./config --prefix=/usr/duole && \
+        make && \
+        make install
+RUN cp /app/cert.pem /usr/duole/ssl
+RUN echo "/usr/local/lib64" >> /etc/ld.so.conf && echo "/usr/duole/lib64" >> /etc/ld.so.conf && ldconfig
+RUN tar -xvf Python-3.10.12.tar && \
+        cd /app/Python-3.10.12 && \
+        ./configure --enable-optimizations --with-lto --with-openssl=/usr/duole --with-openssl-rpath=/usr/duole/lib64 && \
+        sed -i '207s/.*/OPENSSL_LDFLAGS=-L\/usr\/duole\/lib64/' Makefile && \
+        make && \
+        make install
+RUN tar -xvf uwsgi-2.0.20.tar && \
+        cd /app/uwsgi-2.0.20 && \
+        sed -i -e '1300a\                    self.cflags.append("-I/usr/duole/include")\n                    self.libs.append("-L/usr/duole/lib64")' uwsgiconfig.py && \
+        sed -i -e '1309a\                self.cflags.append("-I/usr/duole/include")\n                self.libs.append("-L/usr/duole/lib64")' uwsgiconfig.py && \
+        python3 setup.py install
+COPY libwebsockets.tar.gz /app/
+RUN tar -xvf libwebsockets.tar.gz && \
+        cd /app/libwebsockets/build && \
+        rm -rf * && \
+        cmake .. \
+                -DLWS_WITHOUT_TEST_SERVER=ON \
+                -DLWS_WITHOUT_TESTAPPS=ON && \
+        make && \
+        make install
+COPY protobuf-all-3.20.3.tar /app/
+RUN tar -xvf protobuf-all-3.20.3.tar && \
+        cd /app/protobuf-3.20.3/ && \
+        CFLAGS=-fPIC ./configure --prefix=/usr/duole && \
+        make && \
+        make install
+COPY rocksdb-6.22.1.tar /app/
+RUN yum install -y which
+RUN tar -xvf rocksdb-6.22.1.tar && \
+        cd /app/rocksdb-6.22.1/ && \
+        make shared_lib && \
+        cp -r include/rocksdb/ /usr/local/include/ && \
+        cp librocksdb.so.6.22.1 /usr/local/lib/ && \
+        cd /usr/local/lib && \
+        ln -s librocksdb.so.6.22.1 librocksdb.so
 CMD ["tail", "-f", "/dev/null"]
